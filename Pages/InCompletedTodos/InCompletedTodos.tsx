@@ -8,24 +8,23 @@ type InCompletedTodosProps = {};
 
 export const InCompletedTodos = (props: InCompletedTodosProps) => {
   const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
-  console.log(listOfTodos, "jjklj");
+
   const OnGoingTodosList = listOfTodos
-    .filter((each: any) => each.countdown === true || each.completed === false)
+    .filter((each: any) => each.completed === false)
     .filter((each: any) => {
-      const today = new Date();
-      const sec = today.getTime();
-      const endDate = new Date(each.endDate);
-      const endSec = endDate.getTime();
-      const startDate = new Date(each.startDate);
-      const startSec = startDate.getTime();
-      console.log(
-        startDate.toLocaleTimeString(),
-        startSec,
-        today.toLocaleTimeString(),
-        sec
-      );
-      if (sec >= startSec && sec <= endSec) {
+      if (each.countdown === false) {
         return each;
+      } else {
+        const today = new Date();
+        const sec = today.getTime();
+        const endDate = new Date(each.endDate);
+        const endSec = endDate.getTime();
+        const startDate = new Date(each.startDate);
+        const startSec = startDate.getTime();
+
+        if (sec >= startSec && sec <= endSec) {
+          return each;
+        }
       }
     });
   return (

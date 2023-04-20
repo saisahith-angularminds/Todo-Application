@@ -24,7 +24,6 @@ export const TodoContainer = (props: TodoContainerProps) => {
     (state: any) => state.todo
   );
 
-  console.log("completed", todo.completed);
   const todoDelete = () => {
     dispatcher(deleteTodoById({ id: todo.id }));
   };
@@ -39,7 +38,6 @@ export const TodoContainer = (props: TodoContainerProps) => {
     sendUpdateId(todo.id);
     dispatcher(setPopUp({ isPopup: true }));
   };
-  console.log(updateId);
   const sendUpdateId = (todoId: string) => dispatcher(editId({ id: todoId }));
   let rightButton = [
     {

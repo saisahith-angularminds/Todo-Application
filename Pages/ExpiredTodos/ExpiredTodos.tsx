@@ -15,12 +15,10 @@ export const ExpiredTodos = (props: ExpiredTodosProps) => {
       const sec = today.getTime();
       const endDate = new Date(each.endDate);
       const endSec = endDate.getTime();
-      console.log(endDate.toLocaleTimeString(), today.toLocaleTimeString());
       if (sec >= endSec) {
         return each;
       }
     });
-  console.log(ExpiredTodosList);
   return (
     <View>
       {ExpiredTodosList.map((each: any) => (

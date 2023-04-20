@@ -8,7 +8,6 @@ type DisplayPageProps = {};
 
 export const DisplayPage = (props: DisplayPageProps) => {
   const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
-  console.log(listOfTodos, "jjklj");
   return (
     <View>
       {listOfTodos.map((each: any) => (

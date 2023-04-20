@@ -17,17 +17,12 @@ export const OnGoingTodos = (props: OnGoingTodosProps) => {
       const endSec = endDate.getTime();
       const startDate = new Date(each.startDate);
       const startSec = startDate.getTime();
-      console.log(
-        startDate.toLocaleTimeString(),
-        startSec,
-        today.toLocaleTimeString(),
-        sec
-      );
+
       if (sec >= startSec && sec <= endSec) {
         return each;
       }
     });
-  console.log(OnGoingTodosList);
+
   return (
     <View>
       {OnGoingTodosList.map((each: any) => (

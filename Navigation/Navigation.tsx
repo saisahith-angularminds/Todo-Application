@@ -24,7 +24,6 @@ export const Navigation = (props: Props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     getLocalStore("todos");
-    console.log(listOfTodos, "hiiiii");
   }, []);
   useEffect(() => {
     setLocalStore("todos", [...listOfTodos]);

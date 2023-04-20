@@ -40,7 +40,6 @@ export const AddTodo = (props: Props) => {
     if (!updateId) {
       const newDate = new Date();
       const added = 23 - newDate.getHours();
-      console.log(added + newDate.getHours());
       newDate.setHours(newDate.getHours() + added, 0, 0);
       setEndDate(newDate);
     }
@@ -49,7 +48,6 @@ export const AddTodo = (props: Props) => {
   const setValuesUpdate = () => {
     if (updateId) {
       const editTodo = listOfTodos.filter((item: any) => item.id === updateId);
-      console.info(editTodo[0].title, editTodo[0].description, updateId);
       setTitle(editTodo[0].title);
       setDescription(editTodo[0].description);
       setCountdown(editTodo[0].countdown);
@@ -61,7 +59,7 @@ export const AddTodo = (props: Props) => {
         setStartDate(new Date());
         const newDate = new Date();
         const added = 23 - newDate.getHours();
-        console.log(added + newDate.getHours());
+
         newDate.setHours(newDate.getHours() + added, 59, 0);
         setEndDate(newDate);
       }
@@ -127,7 +125,6 @@ export const AddTodo = (props: Props) => {
     dispatch(setPopUp({ isPopup: false }));
   };
   const sendUpdateId = (todoId: string) => dispatch(editId({ id: todoId }));
-  console.log(title, description);
 
   return (
     <View style={styles.containerAddTodo}>

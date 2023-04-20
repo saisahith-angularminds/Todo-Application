@@ -8,7 +8,7 @@ type CompletedTodosProps = {};
 
 export const CompletedTodos = (props: CompletedTodosProps) => {
   const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
-  console.log(listOfTodos, "jjklj");
+
   return (
     <View>
       {listOfTodos
