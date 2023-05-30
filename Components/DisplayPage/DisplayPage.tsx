@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 type DisplayPageProps = {};
 
 export const DisplayPage = (props: DisplayPageProps) => {
-  const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
+  const { todo:{listOfTodos, isPopup},user:{user} } = useSelector((state: any) => state);
   return (
     <View>
-      {listOfTodos.map((each: any) => (
+      {listOfTodos.filter((todo:any)=>todo.userId===user.id).map((each: any) => (
         <TodoContainer todo={each} key={each.id} />
       ))}
     </View>

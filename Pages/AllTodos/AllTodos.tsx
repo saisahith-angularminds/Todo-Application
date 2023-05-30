@@ -11,14 +11,14 @@ type AllTodosProps = {};
 
 export const AllTodos = (props: AllTodosProps) => {
   const dispatch = useDispatch();
-  const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
+  const { todo:{listOfTodos, isPopup},user:{user} } = useSelector((state: any) => state);
 
   const closePop = () => dispatch(setPopUp({ isPopup: true }));
   const openPop = () => dispatch(setPopUp({ isPopup: true }));
 
   return (
     <>
-      {listOfTodos.length ? (
+      {listOfTodos.filter((todo:any)=>todo.userId===user.id).length ? (
         <DisplayPage />
       ) : (
         <View style={Styles.viewDesign}>

@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 type ExpiredTodosProps = {};
 
 export const ExpiredTodos = (props: ExpiredTodosProps) => {
-  const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
-  const ExpiredTodosList = listOfTodos
+  const { todo:{listOfTodos, isPopup},user:{user} } = useSelector((state: any) => state);
+  const ExpiredTodosList = listOfTodos.filter((todo:any)=>todo.userId===user.id)
     .filter((each: any) => each.countdown === true && each.completed === false)
     .filter((each: any) => {
       const today = new Date();

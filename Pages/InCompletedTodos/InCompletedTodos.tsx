@@ -7,9 +7,9 @@ import { useSelector } from "react-redux";
 type InCompletedTodosProps = {};
 
 export const InCompletedTodos = (props: InCompletedTodosProps) => {
-  const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
+  const { todo:{listOfTodos, isPopup},user:{user} } = useSelector((state: any) => state);
 
-  const OnGoingTodosList = listOfTodos
+  const OnGoingTodosList = listOfTodos.filter((todo:any)=>todo.userId===user.id)
     .filter((each: any) => each.completed === false)
     .filter((each: any) => {
       if (each.countdown === false) {

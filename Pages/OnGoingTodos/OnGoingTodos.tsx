@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 type OnGoingTodosProps = {};
 
 export const OnGoingTodos = (props: OnGoingTodosProps) => {
-  const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
-  const OnGoingTodosList = listOfTodos
+  const { todo:{listOfTodos, isPopup},user:{user} } = useSelector((state: any) => state);
+  const OnGoingTodosList = listOfTodos.filter((todo:any)=>todo.userId===user.id)
     .filter((each: any) => each.countdown === true && each.completed === false)
     .filter((each: any) => {
       const today = new Date();

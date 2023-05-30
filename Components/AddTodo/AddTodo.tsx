@@ -23,9 +23,10 @@ type Props = {
 export const AddTodo = (props: Props) => {
   const { id } = props;
   const dispatch = useDispatch();
-  const { listOfTodos, isPopup, updateId } = useSelector(
-    (state: any) => state.todo
+  const { todo:{listOfTodos, isPopup, updateId},user:{user} } = useSelector(
+    (state: any) => state
   );
+  console.info(user.id)
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [startDate, setStartDate] = useState<Date>(new Date());
@@ -78,8 +79,12 @@ export const AddTodo = (props: Props) => {
       if (!title && !description) {
         throw new Error("Fill the title and description");
       } else {
-        const options = { month: "long", day: "numeric", year: "numeric" };
-        const currentDate = new Date().toLocaleDateString("en-US", options);
+        const options:any = {
+          month: "long",
+          day: "numeric",
+          year: '"numeric" | "2-digit" | string',
+        };
+        const currentDate = new Date("").toLocaleDateString("en-US", options);
         const setOptions = {
           month: "long",
           day: "numeric",
@@ -90,6 +95,7 @@ export const AddTodo = (props: Props) => {
         const newTodo = {
           id: uuid.v4(),
           title,
+          userId:user.id,
           description,
           completed: false,
           date: currentDate,
@@ -145,7 +151,6 @@ export const AddTodo = (props: Props) => {
         onChangeText={(text: string) => setDescription(text)}
         multiline={true}
         // style={styles.buttonStyles}
-        rows={3}
       />
       <CheckBox
         checked={countdown}

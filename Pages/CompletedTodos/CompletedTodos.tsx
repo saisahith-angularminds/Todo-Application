@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 type CompletedTodosProps = {};
 
 export const CompletedTodos = (props: CompletedTodosProps) => {
-  const { listOfTodos, isPopup } = useSelector((state: any) => state.todo);
+  const { todo:{listOfTodos, isPopup},user:{user} } = useSelector((state: any) => state);
 
   return (
     <View>
-      {listOfTodos
+      {listOfTodos.filter((todo:any)=>todo.userId===user.id)
         .filter((each: any) => each.completed === true)
         .map((each: any) => (
           <TodoContainer todo={each} key={each.id} />
