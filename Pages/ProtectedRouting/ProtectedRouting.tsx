@@ -82,7 +82,10 @@ export const ProtectedRouting = (props: Props) => {
   const OnRegister = async () => {
     const ListOfUsers: any = await AsyncStorage.getItem("listOfUsers");
     const users: any = JSON.parse(ListOfUsers || "[]");
-    if (name && email && password) {
+    const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;  
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;  
+   
+    if (name.length>=3 && emailPattern.test(email) && passwordPattern.test(password)) {
       await AsyncStorage.setItem(
         "listOfUsers",
         JSON.stringify([...users, { name, email, password, id: uuid.v4() }])
@@ -93,7 +96,15 @@ export const ProtectedRouting = (props: Props) => {
       );
       dispatch(updateUser({ user: { name, email, password, id: uuid.v4() } }));
     }else{
-      setError("Fill All the Details");
+      name.length < 3
+        ? setError("user name must contains least 3 letters")
+        : !emailPattern.test(email)
+        ? setError("invalid email")
+        : !passwordPattern.test(password)
+        ? setError(
+            "password must contain 8 characters atleast 1 letter 1 number 1 special character"
+          )
+        : setError("Fill All the Details");
     }
   };
   const SignIn = async () => {
@@ -102,7 +113,7 @@ export const ProtectedRouting = (props: Props) => {
       (each: any) => each.email === email
     );
     console.log(users);
-    if (users[0].password === password) {
+    if (users[0]?.password === password) {
       await AsyncStorage.setItem("@user", JSON.stringify(users[0]));
       dispatch(updateUser({ user: users[0] }));
       setError("");
@@ -110,7 +121,6 @@ export const ProtectedRouting = (props: Props) => {
       setError("Incorrect email or password");
     }
   };
-  console.log(error);
   return (
     <View style={styles.container}>
       <Text style={styles.SignUpSignInLine}>
@@ -132,6 +142,7 @@ export const ProtectedRouting = (props: Props) => {
           ...styles.titleContainer,
           display: register ? "flex" : "none",
         }}
+        value={name}
         placeholder="User Name"
         onChangeText={(text: string) => setName(text)}
       />
@@ -139,6 +150,7 @@ export const ProtectedRouting = (props: Props) => {
         containerStyle={styles.titleContainer}
         placeholder="Email"
         onChangeText={(text: string) => setEmail(text)}
+        value={email}
       />
       <Input
         containerStyle={styles.titleContainer}
@@ -146,9 +158,10 @@ export const ProtectedRouting = (props: Props) => {
         onChangeText={(text: string) => {
           setPassword(text), setError("");
         }}
+        value={password}
         placeholder="Password"
       />
-      <Text>{error ?? ""}</Text>
+      <Text style={styles.errorTextStyle}>{error ?? ""}</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={register ? OnRegister : SignIn}>
